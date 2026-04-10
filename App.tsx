@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { lookupPlateRegion } from './regions';
@@ -19,7 +18,6 @@ export default function App() {
   const [plate, setPlate] = useState('');
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const [language, setLanguage] = useState<Language>('en');
 
   const t = (key: keyof typeof import('./translations').translations.en) =>
@@ -42,18 +40,12 @@ export default function App() {
       return;
     }
 
-    setLoading(true);
-    // Simulate API call delay
-    setTimeout(() => {
-      const region = lookupPlateRegion(plate);
-      setLoading(false);
-
-      if (region) {
-        setResult(region);
-      } else {
-        setError(t('notFound'));
-      }
-    }, 500);
+    const region = lookupPlateRegion(plate);
+    if (region) {
+      setResult(region);
+    } else {
+      setError(t('notFound'));
+    }
   };
 
   const handleClear = () => {
@@ -94,29 +86,16 @@ export default function App() {
               value={plate}
               onChangeText={setPlate}
               autoCapitalize="characters"
-              editable={!loading}
             />
           </View>
 
           {/* Buttons */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[styles.button, styles.searchButton]}
-              onPress={handleSearch}
-              disabled={loading}
-            >
-              {loading ? (
-                <ActivityIndicator color="#fff" />
-              ) : (
-                <Text style={styles.buttonText}>{t('searchButton')}</Text>
-              )}
+            <TouchableOpacity style={[styles.button, styles.searchButton]} onPress={handleSearch}>
+              <Text style={styles.buttonText}>{t('searchButton')}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={[styles.button, styles.clearButton]}
-              onPress={handleClear}
-              disabled={loading}
-            >
+            <TouchableOpacity style={[styles.button, styles.clearButton]} onPress={handleClear}>
               <Text style={styles.buttonText}>{t('clearButton')}</Text>
             </TouchableOpacity>
           </View>
