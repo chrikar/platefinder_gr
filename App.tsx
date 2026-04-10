@@ -23,6 +23,8 @@ export default function App() {
   const t = (key: keyof typeof import('./translations').translations.en) =>
     getTranslation(language, key);
 
+  const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}[-\s]?\d{4}$/i;
+
   const handleSearch = () => {
     setError(null);
     setResult(null);
@@ -32,10 +34,7 @@ export default function App() {
       return;
     }
 
-    // Validate Greek plate format (3 letters + 4 numbers, Latin or Greek, case-insensitive)
-    // Valid Greek letters: Α, Β, Ε, Ζ, Η, Ι, Κ, Μ, Ν, Ο, Ρ, Τ, Υ, Χ
-    const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}[-\s]?\d{4}$/i;
-    if (!plateRegex.test(plate)) {
+    if (!plateRegex.test(plate.trim())) {
       setError(t('invalidFormat'));
       return;
     }
@@ -84,7 +83,18 @@ export default function App() {
               placeholder={t('placeholder')}
               placeholderTextColor="#999"
               value={plate}
-              onChangeText={setPlate}
+              onChangeText={(text) => {
+                setPlate(text);
+                if (plateRegex.test(text.trim())) {
+                  const region = lookupPlateRegion(text);
+                  setError(null);
+                  setResult(region ?? null);
+                  if (!region) setError(t('notFound'));
+                } else {
+                  setResult(null);
+                  setError(null);
+                }
+              }}
               autoCapitalize="characters"
             />
           </View>
