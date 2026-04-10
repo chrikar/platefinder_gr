@@ -25,6 +25,13 @@ export default function App() {
 
   const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}[-\s]?\d{4}$/i;
 
+  // Derived inline validation state — no extra useState needed
+  const trimmed = plate.trim();
+  const isValidFormat = plateRegex.test(trimmed);
+  // Only flag as invalid once the user has typed enough for a complete plate (7 chars)
+  const showFormatError = trimmed.length >= 7 && !isValidFormat;
+  const inputBorderColor = isValidFormat ? '#00cc66' : showFormatError ? '#ff3333' : '#0066ff';
+
   const handleSearch = () => {
     setError(null);
     setResult(null);
@@ -79,7 +86,7 @@ export default function App() {
           <View style={styles.inputSection}>
             <Text style={styles.label}>{t('inputLabel')}</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, { borderColor: inputBorderColor }]}
               placeholder={t('placeholder')}
               placeholderTextColor="#999"
               value={plate}
@@ -97,6 +104,7 @@ export default function App() {
               }}
               autoCapitalize="characters"
             />
+            {showFormatError && <Text style={styles.inputHint}>{t('invalidFormat')}</Text>}
           </View>
 
           {/* Buttons */}
@@ -198,6 +206,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#fff',
     backgroundColor: '#2a2a2a',
+  },
+  inputHint: {
+    color: '#ff6666',
+    fontSize: 12,
+    marginTop: 6,
   },
   buttonContainer: {
     flexDirection: 'row',
