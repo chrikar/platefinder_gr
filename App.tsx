@@ -38,18 +38,6 @@ export default function App() {
     setError(region ? null : t('notFound'));
   };
 
-  const handleSearch = () => {
-    if (!plate.trim()) {
-      setError(t('emptyInput'));
-      return;
-    }
-    if (!plateRegex.test(plate.trim())) {
-      setError(t('invalidFormat'));
-      return;
-    }
-    lookup(plate);
-  };
-
   const handleClear = () => {
     setPlate('');
     setResult(null);
@@ -109,15 +97,6 @@ export default function App() {
 
           {/* Buttons */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[styles.button, styles.searchButton]}
-              onPress={handleSearch}
-              accessibilityLabel={t('a11ySearchButton')}
-              accessibilityRole="button"
-            >
-              <Text style={styles.buttonText}>{t('searchButton')}</Text>
-            </TouchableOpacity>
-
             <TouchableOpacity
               style={[styles.button, styles.clearButton]}
               onPress={handleClear}
@@ -226,19 +205,13 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    gap: 12,
     marginBottom: 24,
   },
   button: {
-    flex: 1,
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  searchButton: {
-    backgroundColor: '#0066ff',
   },
   clearButton: {
     backgroundColor: '#666',

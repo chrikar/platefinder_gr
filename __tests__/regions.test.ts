@@ -118,11 +118,11 @@ describe('greekRegions data integrity', () => {
 // ---------------------------------------------------------------------------
 describe('getTranslation', () => {
   test('returns English string for "en"', () => {
-    expect(getTranslation('en', 'searchButton')).toBe('Search');
+    expect(getTranslation('en', 'clearButton')).toBe('Clear');
   });
 
   test('returns Greek string for "gr"', () => {
-    expect(getTranslation('gr', 'searchButton')).toBe('Αναζήτηση');
+    expect(getTranslation('gr', 'clearButton')).toBe('Εκκαθάριση');
   });
 
   test('falls back to key when translation is missing', () => {
