@@ -15,6 +15,7 @@ import { lookupPlateRegion, plateRegex } from './regions';
 import { getTranslation, Language, TranslationKey } from './translations';
 import { translateRegion } from './regionTranslations';
 import GreekMap from './GreekMap';
+import { Analytics } from './Analytics';
 
 export default function App() {
   const [plate, setPlate] = useState('');
@@ -153,6 +154,7 @@ export default function App() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      {Platform.OS === 'web' ? <Analytics /> : null}
     </SafeAreaView>
   );
 }
