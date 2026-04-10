@@ -12,19 +12,25 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { lookupPlateRegion } from './regions';
+import { getTranslation, Language } from './translations';
+import { translateRegion } from './regionTranslations';
 
 export default function App() {
   const [plate, setPlate] = useState('');
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [language, setLanguage] = useState<Language>('en');
+
+  const t = (key: keyof typeof import('./translations').translations.en) =>
+    getTranslation(language, key);
 
   const handleSearch = () => {
     setError(null);
     setResult(null);
 
     if (!plate.trim()) {
-      setError('Please enter a license plate');
+      setError(t('emptyInput'));
       return;
     }
 
@@ -32,7 +38,7 @@ export default function App() {
     // Valid Greek letters: Α, Β, Ε, Ζ, Η, Ι, Κ, Μ, Ν, Ο, Ρ, Τ, Υ, Χ
     const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}[-\s]?\d{4}$/i;
     if (!plateRegex.test(plate)) {
-      setError('Invalid format. Use: ABC-1234 or ABC 1234');
+      setError(t('invalidFormat'));
       return;
     }
 
@@ -45,7 +51,7 @@ export default function App() {
       if (region) {
         setResult(region);
       } else {
-        setError('Region not found. Please check the plate number.');
+        setError(t('notFound'));
       }
     }, 500);
   };
@@ -64,18 +70,28 @@ export default function App() {
         style={styles.keyboardView}
       >
         <View style={styles.content}>
-          {/* Header */}
-          <View style={styles.header}>
-            <Text style={styles.title}>PlateFinder GR</Text>
-            <Text style={styles.subtitle}>Find Greek car registration area</Text>
+          {/* Header with Language Toggle */}
+          <View style={styles.headerContainer}>
+            <View style={styles.header}>
+              <Text style={styles.title}>{t('appTitle')}</Text>
+              <Text style={styles.subtitle}>{t('appSubtitle')}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.languageToggle}
+              onPress={() => setLanguage(language === 'en' ? 'gr' : 'en')}
+            >
+              <Text style={styles.languageToggleText}>
+                {language === 'en' ? 'EL' : 'EN'}
+              </Text>
+            </TouchableOpacity>
           </View>
 
           {/* Input Section */}
           <View style={styles.inputSection}>
-            <Text style={styles.label}>Enter License Plate:</Text>
+            <Text style={styles.label}>{t('inputLabel')}</Text>
             <TextInput
               style={styles.input}
-              placeholder="e.g., ABC-1234"
+              placeholder={t('placeholder')}
               placeholderTextColor="#999"
               value={plate}
               onChangeText={setPlate}
@@ -94,7 +110,7 @@ export default function App() {
               {loading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
-                <Text style={styles.buttonText}>Search</Text>
+                <Text style={styles.buttonText}>{t('searchButton')}</Text>
               )}
             </TouchableOpacity>
 
@@ -103,15 +119,15 @@ export default function App() {
               onPress={handleClear}
               disabled={loading}
             >
-              <Text style={styles.buttonText}>Clear</Text>
+              <Text style={styles.buttonText}>{t('clearButton')}</Text>
             </TouchableOpacity>
           </View>
 
           {/* Results */}
           {result && (
             <View style={styles.resultContainer}>
-              <Text style={styles.resultLabel}>Region:</Text>
-              <Text style={styles.resultText}>{result}</Text>
+              <Text style={styles.resultLabel}>{t('regionLabel')}</Text>
+              <Text style={styles.resultText}>{translateRegion(result, language)}</Text>
             </View>
           )}
 
@@ -124,9 +140,9 @@ export default function App() {
 
           {/* Info */}
           <View style={styles.infoContainer}>
-            <Text style={styles.infoTitle}>Format:</Text>
-            <Text style={styles.infoText}>ABC-1234 (uppercase or lowercase)</Text>
-            <Text style={styles.infoText} style={{marginTop: 4}}>Examples: YA-1234, ya-1234, ΥΑ-1234, υα-1234</Text>
+            <Text style={styles.infoTitle}>{t('formatTitle')}</Text>
+            <Text style={styles.infoText}>{t('formatText')}</Text>
+            <Text style={styles.infoText} style={{marginTop: 4}}>{t('formatExamples')}</Text>
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -147,9 +163,14 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
   },
-  header: {
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     marginBottom: 40,
-    alignItems: 'center',
+  },
+  header: {
+    flex: 1,
   },
   title: {
     fontSize: 32,
@@ -160,6 +181,18 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     color: '#aaa',
+  },
+  languageToggle: {
+    backgroundColor: '#0066ff',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 6,
+    marginTop: 4,
+  },
+  languageToggleText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 12,
   },
   inputSection: {
     marginBottom: 24,
