@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Svg, { Path, Circle, G } from 'react-native-svg';
+import { View, StyleSheet } from 'react-native';
+import Svg, { Path, Circle, G, Text as SvgText } from 'react-native-svg';
 import { translateRegion } from './regionTranslations';
 import { Language } from './translations';
 
@@ -184,19 +184,38 @@ export default function GreekMap({ region, language }: GreekMapProps) {
           <Path d={PAROS} fill={fill} stroke={stroke} strokeWidth={1} />
           <Path d={THASSOS} fill={fill} stroke={stroke} strokeWidth={1} />
           <Path d={ANDROS} fill={fill} stroke={stroke} strokeWidth={1} />
-          {dot && (
+          {dot && region && (
             <G>
               <Circle cx={dot[0]} cy={dot[1]} r={10} fill="#0066ff" opacity={0.25} />
               <Circle cx={dot[0]} cy={dot[1]} r={5} fill="#0066ff" />
+              {/* Outline pass for legibility against the map background */}
+              <SvgText
+                x={dot[0] > 150 ? dot[0] - 14 : dot[0] + 14}
+                y={dot[1] + 4}
+                fontSize={10}
+                fontWeight="600"
+                fill="#1a2a3a"
+                stroke="#1a2a3a"
+                strokeWidth={3}
+                textAnchor={dot[0] > 150 ? 'end' : 'start'}
+              >
+                {translateRegion(region, language)}
+              </SvgText>
+              {/* Fill pass */}
+              <SvgText
+                x={dot[0] > 150 ? dot[0] - 14 : dot[0] + 14}
+                y={dot[1] + 4}
+                fontSize={10}
+                fontWeight="600"
+                fill="#ffffff"
+                textAnchor={dot[0] > 150 ? 'end' : 'start'}
+              >
+                {translateRegion(region, language)}
+              </SvgText>
             </G>
           )}
         </G>
       </Svg>
-      {region && (
-        <Text style={styles.regionLabel} numberOfLines={1}>
-          {translateRegion(region, language)}
-        </Text>
-      )}
     </View>
   );
 }
@@ -210,16 +229,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#1a2a3a',
     borderRadius: 8,
     overflow: 'hidden',
-    justifyContent: 'flex-end',
     marginBottom: 16,
-  },
-  regionLabel: {
-    position: 'absolute',
-    bottom: 8,
-    alignSelf: 'center',
-    color: '#aaa',
-    fontSize: 11,
-    fontWeight: '600',
-    letterSpacing: 0.5,
   },
 });
