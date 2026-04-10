@@ -7,12 +7,14 @@ import {
   TouchableOpacity,
   SafeAreaView,
   KeyboardAvoidingView,
+  ScrollView,
   Platform,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { lookupPlateRegion } from './regions';
 import { getTranslation, Language } from './translations';
 import { translateRegion } from './regionTranslations';
+import GreekMap from './GreekMap';
 
 export default function App() {
   const [plate, setPlate] = useState('');
@@ -67,7 +69,11 @@ export default function App() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
       >
-        <View style={styles.content}>
+        <ScrollView
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
           {/* Header with Language Toggle */}
           <View style={styles.headerContainer}>
             <View style={styles.header}>
@@ -126,6 +132,9 @@ export default function App() {
             </View>
           )}
 
+          {/* Map */}
+          <GreekMap region={result} />
+
           {/* Errors */}
           {error && (
             <View style={styles.errorContainer}>
@@ -139,7 +148,7 @@ export default function App() {
             <Text style={styles.infoText}>{t('formatText')}</Text>
             <Text style={[styles.infoText, { marginTop: 4 }]}>{t('formatExamples')}</Text>
           </View>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -154,9 +163,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    flex: 1,
     padding: 20,
-    justifyContent: 'center',
+    paddingBottom: 40,
   },
   headerContainer: {
     flexDirection: 'row',
