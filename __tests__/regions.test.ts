@@ -154,11 +154,11 @@ describe('getPlateCodesForRegion', () => {
 // ---------------------------------------------------------------------------
 describe('getTranslation', () => {
   test('returns English string for "en"', () => {
-    expect(getTranslation('en', 'clearButton')).toBe('Clear');
+    expect(getTranslation('en', 'regionLabel')).toBe('Region:');
   });
 
   test('returns Greek string for "gr"', () => {
-    expect(getTranslation('gr', 'clearButton')).toBe('Εκκαθάριση');
+    expect(getTranslation('gr', 'regionLabel')).toBe('Περιοχή:');
   });
 
   test('falls back to key when translation is missing', () => {

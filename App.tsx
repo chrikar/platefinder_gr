@@ -72,38 +72,44 @@ export default function App() {
             </TouchableOpacity>
           </View>
 
+          {/* Map */}
+          <GreekMap region={result} language={language} />
+
           {/* Input Section */}
           <View style={styles.inputSection}>
             <Text style={styles.label}>{t('inputLabel')}</Text>
-            <TextInput
-              style={[styles.input, { borderColor: inputBorderColor }]}
-              placeholder={t('placeholder')}
-              placeholderTextColor="#999"
-              value={plate}
-              accessibilityLabel={t('a11yPlateInput')}
-              onChangeText={(text) => {
-                setPlate(text);
-                if (plateRegex.test(text.trim())) {
-                  lookup(text);
-                } else {
-                  setResult(null);
-                  setError(null);
-                }
-              }}
-              autoCapitalize="characters"
-            />
+            <View style={styles.inputRow}>
+              <TextInput
+                style={[styles.input, { borderColor: inputBorderColor }]}
+                placeholder={t('placeholder')}
+                placeholderTextColor="#999"
+                value={plate}
+                accessibilityLabel={t('a11yPlateInput')}
+                onChangeText={(text) => {
+                  setPlate(text);
+                  if (plateRegex.test(text.trim())) {
+                    lookup(text);
+                  } else {
+                    setResult(null);
+                    setError(null);
+                  }
+                }}
+                autoCapitalize="characters"
+              />
+              {plate.length > 0 && (
+                <TouchableOpacity
+                  style={styles.clearAdornment}
+                  onPress={handleClear}
+                  accessibilityLabel={t('a11yClearButton')}
+                  accessibilityRole="button"
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
+                  <Text style={styles.clearAdornmentText}>✕</Text>
+                </TouchableOpacity>
+              )}
+            </View>
             {showFormatError && <Text style={styles.inputHint}>{t('invalidFormat')}</Text>}
           </View>
-
-          {/* Buttons */}
-          <TouchableOpacity
-            style={[styles.button, styles.clearButton]}
-            onPress={handleClear}
-            accessibilityLabel={t('a11yClearButton')}
-            accessibilityRole="button"
-          >
-            <Text style={styles.buttonText}>{t('clearButton')}</Text>
-          </TouchableOpacity>
 
           {/* Results */}
           {result && (
@@ -113,22 +119,12 @@ export default function App() {
             </View>
           )}
 
-          {/* Map */}
-          <GreekMap region={result} language={language} />
-
           {/* Errors */}
           {error && (
             <View style={styles.errorContainer}>
               <Text style={styles.errorText}>{error}</Text>
             </View>
           )}
-
-          {/* Info */}
-          <View style={styles.infoContainer}>
-            <Text style={styles.infoTitle}>{t('formatTitle')}</Text>
-            <Text style={styles.infoText}>{t('formatText')}</Text>
-            <Text style={[styles.infoText, { marginTop: 4 }]}>{t('formatExamples')}</Text>
-          </View>
         </ScrollView>
       </KeyboardAvoidingView>
       {Platform.OS === 'web' ? <Analytics /> : null}
@@ -182,6 +178,10 @@ const styles = StyleSheet.create({
   inputSection: {
     marginBottom: 24,
   },
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   label: {
     fontSize: 14,
     fontWeight: '600',
@@ -189,33 +189,29 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   input: {
+    flex: 1,
     borderWidth: 2,
     borderColor: '#0066ff',
     borderRadius: 8,
     padding: 12,
+    paddingRight: 40,
     fontSize: 18,
     color: '#fff',
     backgroundColor: '#2a2a2a',
+  },
+  clearAdornment: {
+    position: 'absolute',
+    right: 12,
+    padding: 4,
+  },
+  clearAdornmentText: {
+    color: '#aaa',
+    fontSize: 16,
   },
   inputHint: {
     color: '#ff6666',
     fontSize: 12,
     marginTop: 6,
-  },
-  button: {
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  clearButton: {
-    backgroundColor: '#666',
-    marginBottom: 24,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
   },
   resultContainer: {
     backgroundColor: '#0066ff',
@@ -243,22 +239,5 @@ const styles = StyleSheet.create({
   errorText: {
     color: '#fff',
     fontSize: 14,
-  },
-  infoContainer: {
-    backgroundColor: '#2a2a2a',
-    borderRadius: 8,
-    padding: 12,
-    borderLeftWidth: 4,
-    borderLeftColor: '#0066ff',
-  },
-  infoTitle: {
-    color: '#0066ff',
-    fontSize: 12,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  infoText: {
-    color: '#aaa',
-    fontSize: 13,
   },
 });
