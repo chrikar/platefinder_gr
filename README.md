@@ -5,17 +5,20 @@ A React Native app that lets you enter a Greek license plate and get the region/
 ## Setup
 
 ### Prerequisites
+
 - Node.js (v16+)
 - npm or yarn
 
 ### Installation
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Start the app:
+
 ```bash
 npm start
 ```
@@ -36,6 +39,7 @@ npm start
 ## Greek License Plate Format
 
 Format: `XYZ-1234` (3 letters + 4 digits)
+
 - First 3 letters = region code (prefecture)
 - Last 4 digits = sequential number
 
@@ -46,12 +50,14 @@ Edit `regions.ts` to add more prefecture mappings. The file contains a object ma
 ## Build for Production
 
 ### iOS
+
 ```bash
 npm install -g eas-cli
 eas build --platform ios
 ```
 
 ### Android
+
 ```bash
 npm install -g eas-cli
 eas build --platform android

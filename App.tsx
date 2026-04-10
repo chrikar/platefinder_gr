@@ -80,9 +80,7 @@ export default function App() {
               style={styles.languageToggle}
               onPress={() => setLanguage(language === 'en' ? 'gr' : 'en')}
             >
-              <Text style={styles.languageToggleText}>
-                {language === 'en' ? 'EL' : 'EN'}
-              </Text>
+              <Text style={styles.languageToggleText}>{language === 'en' ? 'EL' : 'EN'}</Text>
             </TouchableOpacity>
           </View>
 
@@ -142,7 +140,7 @@ export default function App() {
           <View style={styles.infoContainer}>
             <Text style={styles.infoTitle}>{t('formatTitle')}</Text>
             <Text style={styles.infoText}>{t('formatText')}</Text>
-            <Text style={styles.infoText} style={{marginTop: 4}}>{t('formatExamples')}</Text>
+            <Text style={[styles.infoText, { marginTop: 4 }]}>{t('formatExamples')}</Text>
           </View>
         </View>
       </KeyboardAvoidingView>
