@@ -28,7 +28,7 @@ npm start
 
 ## How It Works
 
-- Enter a Greek license plate (e.g., `ABC-1234`)
+- Enter a Greek license plate (e.g., `ABE-1234`)
 - The app extracts the first 2-3 letters (region code)
 - Looks it up in the Greek prefectures database
 - Returns the area/region name
