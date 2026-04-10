@@ -2,6 +2,61 @@
 // Source: Wikipedia - Πινακίδες κυκλοφορίας οχημάτων της Ελλάδας
 // First two letters map to Greek regions
 
+// Latin to Greek character mapping (for user convenience)
+const latinToGreek: Record<string, string> = {
+  'A': 'Α',
+  'a': 'Α',
+  'B': 'Β',
+  'b': 'Β',
+  'E': 'Ε',
+  'e': 'Ε',
+  'Z': 'Ζ',
+  'z': 'Ζ',
+  'H': 'Η',
+  'h': 'Η',
+  'I': 'Ι',
+  'i': 'Ι',
+  'K': 'Κ',
+  'k': 'Κ',
+  'M': 'Μ',
+  'm': 'Μ',
+  'N': 'Ν',
+  'n': 'Ν',
+  'O': 'Ο',
+  'o': 'Ο',
+  'R': 'Ρ',
+  'r': 'Ρ',
+  'T': 'Τ',
+  't': 'Τ',
+  'Y': 'Υ',
+  'y': 'Υ',
+  'X': 'Χ',
+  'x': 'Χ',
+  // Handle Greek lowercase to uppercase
+  'α': 'Α',
+  'β': 'Β',
+  'ε': 'Ε',
+  'ζ': 'Ζ',
+  'η': 'Η',
+  'ι': 'Ι',
+  'κ': 'Κ',
+  'μ': 'Μ',
+  'ν': 'Ν',
+  'ο': 'Ο',
+  'ρ': 'Ρ',
+  'τ': 'Τ',
+  'υ': 'Υ',
+  'χ': 'Χ',
+};
+
+// Convert Latin characters to Greek
+const convertLatinToGreek = (text: string): string => {
+  return text
+    .split('')
+    .map(char => latinToGreek[char] || char)
+    .join('');
+};
+
 export const greekRegions: Record<string, string> = {
   'ΥΑ': 'Athens',
   'ΥΒ': 'Athens',
@@ -195,11 +250,14 @@ export const greekRegions: Record<string, string> = {
 };
 
 export const lookupPlateRegion = (plate: string): string | null => {
-  // Remove special characters and convert to uppercase
-  const cleanPlate = plate.replace(/[-\s]/g, '').toUpperCase();
+  // Remove special characters
+  const cleanPlate = plate.replace(/[-\s]/g, '');
+
+  // Convert Latin characters to Greek if needed
+  const greekPlate = convertLatinToGreek(cleanPlate);
 
   // Extract first 2 letters (the region code)
-  const regionCode = cleanPlate.substring(0, 2);
+  const regionCode = greekPlate.substring(0, 2);
 
   return greekRegions[regionCode] || null;
 };

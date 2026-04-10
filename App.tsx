@@ -28,8 +28,9 @@ export default function App() {
       return;
     }
 
-    // Validate Greek plate format (roughly: 3 letters + 4 numbers)
-    const plateRegex = /^[A-Z]{3}[-\s]?\d{4}$/i;
+    // Validate Greek plate format (3 letters + 4 numbers, Latin or Greek, case-insensitive)
+    // Valid Greek letters: Α, Β, Ε, Ζ, Η, Ι, Κ, Μ, Ν, Ο, Ρ, Τ, Υ, Χ
+    const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}[-\s]?\d{4}$/i;
     if (!plateRegex.test(plate)) {
       setError('Invalid format. Use: ABC-1234 or ABC 1234');
       return;
@@ -124,7 +125,8 @@ export default function App() {
           {/* Info */}
           <View style={styles.infoContainer}>
             <Text style={styles.infoTitle}>Format:</Text>
-            <Text style={styles.infoText}>Greek plates: ABC-1234 (3 letters + 4 digits)</Text>
+            <Text style={styles.infoText}>ABC-1234 (uppercase or lowercase)</Text>
+            <Text style={styles.infoText} style={{marginTop: 4}}>Examples: YA-1234, ya-1234, ΥΑ-1234, υα-1234</Text>
           </View>
         </View>
       </KeyboardAvoidingView>
