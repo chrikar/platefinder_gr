@@ -34,7 +34,8 @@ export const translations = {
 };
 
 export type Language = 'en' | 'gr';
+export type TranslationKey = keyof typeof translations.en;
 
-export const getTranslation = (language: Language, key: keyof typeof translations.en): string => {
+export const getTranslation = (language: Language, key: TranslationKey): string => {
   return translations[language][key] || key;
 };

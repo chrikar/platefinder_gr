@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { lookupPlateRegion, plateRegex } from './regions';
-import { getTranslation, Language } from './translations';
+import { getTranslation, Language, TranslationKey } from './translations';
 import { translateRegion } from './regionTranslations';
 import GreekMap from './GreekMap';
 
@@ -22,8 +22,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [language, setLanguage] = useState<Language>('en');
 
-  const t = (key: keyof typeof import('./translations').translations.en) =>
-    getTranslation(language, key);
+  const t = (key: TranslationKey) => getTranslation(language, key);
 
   // Derived inline validation state — no extra useState needed
   const trimmed = plate.trim();
