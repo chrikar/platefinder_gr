@@ -15,6 +15,7 @@ import { lookupPlateRegion } from './regions';
 import { getTranslation, Language } from './translations';
 import { translateRegion } from './regionTranslations';
 import GreekMap from './GreekMap';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App() {
   const [plate, setPlate] = useState('');
@@ -150,6 +151,7 @@ export default function App() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      <Analytics />
     </SafeAreaView>
   );
 }
