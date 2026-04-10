@@ -15,6 +15,10 @@ export const translations = {
     formatTitle: 'Format:',
     formatText: 'ABE or ABE-1234 (uppercase or lowercase)',
     formatExamples: 'Examples: YA, YAB, YAB-1234, ΥΑΒ-1234',
+    a11yLanguageToggle: 'Switch to Greek',
+    a11ySearchButton: 'Search for plate region',
+    a11yClearButton: 'Clear input',
+    a11yPlateInput: 'License plate input',
   },
   gr: {
     appTitle: 'PlateFinder GR',
@@ -30,6 +34,10 @@ export const translations = {
     formatTitle: 'Μορφή:',
     formatText: 'ABE ή ABE-1234 (κεφαλαία ή πεζά)',
     formatExamples: 'Παραδείγματα: ΥΑ, ΥΑΒ, ΥΑΒ-1234',
+    a11yLanguageToggle: 'Εναλλαγή στα Αγγλικά',
+    a11ySearchButton: 'Αναζήτηση περιοχής πινακίδας',
+    a11yClearButton: 'Εκκαθάριση εισαγωγής',
+    a11yPlateInput: 'Εισαγωγή πινακίδας',
   },
 };
 

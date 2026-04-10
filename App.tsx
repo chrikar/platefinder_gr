@@ -76,6 +76,8 @@ export default function App() {
             <TouchableOpacity
               style={styles.languageToggle}
               onPress={() => setLanguage(language === 'en' ? 'gr' : 'en')}
+              accessibilityLabel={t('a11yLanguageToggle')}
+              accessibilityRole="button"
             >
               <Text style={styles.languageToggleText}>{language === 'en' ? 'EL' : 'EN'}</Text>
             </TouchableOpacity>
@@ -89,6 +91,7 @@ export default function App() {
               placeholder={t('placeholder')}
               placeholderTextColor="#999"
               value={plate}
+              accessibilityLabel={t('a11yPlateInput')}
               onChangeText={(text) => {
                 setPlate(text);
                 if (plateRegex.test(text.trim())) {
@@ -105,11 +108,21 @@ export default function App() {
 
           {/* Buttons */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button, styles.searchButton]} onPress={handleSearch}>
+            <TouchableOpacity
+              style={[styles.button, styles.searchButton]}
+              onPress={handleSearch}
+              accessibilityLabel={t('a11ySearchButton')}
+              accessibilityRole="button"
+            >
               <Text style={styles.buttonText}>{t('searchButton')}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.button, styles.clearButton]} onPress={handleClear}>
+            <TouchableOpacity
+              style={[styles.button, styles.clearButton]}
+              onPress={handleClear}
+              accessibilityLabel={t('a11yClearButton')}
+              accessibilityRole="button"
+            >
               <Text style={styles.buttonText}>{t('clearButton')}</Text>
             </TouchableOpacity>
           </View>
