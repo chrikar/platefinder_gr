@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Svg, { Path, Circle, G } from 'react-native-svg';
+import { translateRegion } from './regionTranslations';
+import { Language } from './translations';
 
 // SVG viewBox: 0 0 300 340
 // Paths derived from Natural Earth 50m data (ISO 300 – Greece)
@@ -150,9 +152,10 @@ const regionCoords: Record<string, [number, number]> = {
 
 interface GreekMapProps {
   region: string | null;
+  language: Language;
 }
 
-export default function GreekMap({ region }: GreekMapProps) {
+export default function GreekMap({ region, language }: GreekMapProps) {
   const coords = region ? regionCoords[region] : null;
   const dot = coords ? project(coords[0], coords[1]) : null;
 
@@ -191,7 +194,7 @@ export default function GreekMap({ region }: GreekMapProps) {
       </Svg>
       {region && (
         <Text style={styles.regionLabel} numberOfLines={1}>
-          {region}
+          {translateRegion(region, language)}
         </Text>
       )}
     </View>

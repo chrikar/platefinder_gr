@@ -54,6 +54,7 @@ export const regionTranslations: Record<string, string> = {
   Rhodope: 'Ροδόπη',
   Kastoria: 'Καστοριά',
   Lefkada: 'Λευκάδα',
+  Achaia: 'Αχαΐα',
 };
 
 export const translateRegion = (region: string, language: string): string => {

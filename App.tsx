@@ -133,7 +133,7 @@ export default function App() {
           )}
 
           {/* Map */}
-          <GreekMap region={result} />
+          <GreekMap region={result} language={language} />
 
           {/* Errors */}
           {error && (
