@@ -31,26 +31,22 @@ export default function App() {
   const showFormatError = trimmed.length >= 3 && !isValidFormat;
   const inputBorderColor = isValidFormat ? '#00cc66' : showFormatError ? '#ff3333' : '#0066ff';
 
-  const handleSearch = () => {
-    setError(null);
-    setResult(null);
+  const lookup = (text: string) => {
+    const region = lookupPlateRegion(text);
+    setResult(region ?? null);
+    setError(region ? null : t('notFound'));
+  };
 
+  const handleSearch = () => {
     if (!plate.trim()) {
       setError(t('emptyInput'));
       return;
     }
-
     if (!plateRegex.test(plate.trim())) {
       setError(t('invalidFormat'));
       return;
     }
-
-    const region = lookupPlateRegion(plate);
-    if (region) {
-      setResult(region);
-    } else {
-      setError(t('notFound'));
-    }
+    lookup(plate);
   };
 
   const handleClear = () => {
@@ -96,10 +92,7 @@ export default function App() {
               onChangeText={(text) => {
                 setPlate(text);
                 if (plateRegex.test(text.trim())) {
-                  const region = lookupPlateRegion(text);
-                  setError(null);
-                  setResult(region ?? null);
-                  if (!region) setError(t('notFound'));
+                  lookup(text);
                 } else {
                   setResult(null);
                   setError(null);
