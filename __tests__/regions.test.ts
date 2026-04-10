@@ -5,7 +5,7 @@ import { translateRegion } from '../regionTranslations';
 // ---------------------------------------------------------------------------
 // Plate regex (duplicated here so changes to App.tsx don't break the tests)
 // ---------------------------------------------------------------------------
-const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}[-\s]?\d{4}$/i;
+const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}([-\s]?\d{4})?$/i;
 
 // ---------------------------------------------------------------------------
 // plateRegex
@@ -19,6 +19,9 @@ describe('plateRegex', () => {
     'ΥΑΒ-1234', // Greek uppercase with dash
     'υαβ-1234', // Greek lowercase with dash
     'ΥΑΒ1234', // Greek no separator
+    'YAB', // letters only, no digits
+    'yab', // lowercase letters only
+    'ΥΑΒ', // Greek letters only
   ];
 
   const invalid = [

@@ -25,13 +25,13 @@ export default function App() {
   const t = (key: keyof typeof import('./translations').translations.en) =>
     getTranslation(language, key);
 
-  const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}[-\s]?\d{4}$/i;
+  const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}([-\s]?\d{4})?$/i;
 
   // Derived inline validation state — no extra useState needed
   const trimmed = plate.trim();
   const isValidFormat = plateRegex.test(trimmed);
-  // Only flag as invalid once the user has typed enough for a complete plate (7 chars)
-  const showFormatError = trimmed.length >= 7 && !isValidFormat;
+  // Flag as invalid once the user has typed enough characters to evaluate (3+ chars)
+  const showFormatError = trimmed.length >= 3 && !isValidFormat;
   const inputBorderColor = isValidFormat ? '#00cc66' : showFormatError ? '#ff3333' : '#0066ff';
 
   const handleSearch = () => {
