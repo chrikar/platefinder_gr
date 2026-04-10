@@ -1,71 +1,89 @@
-# PlateFinder GR - Greek License Plate Lookup
+# PlateFinder GR — Greek License Plate Lookup
 
-A React Native app that lets you enter a Greek license plate and get the region/area it's from.
+An Expo (React Native) app and web app that identifies the Greek prefecture behind any license plate. Enter a plate and instantly see the region it was registered in, with an interactive map highlight. Runs on iOS, Android, and the web (deployed on Vercel).
 
-## Setup
+## Features
+
+- Lookup any Greek license plate prefix and get the corresponding prefecture
+- Interactive SVG map of Greece that highlights the matched region
+- UI available in English and Greek
+- Real-time inline format validation as you type
+- Vercel Web Analytics on the web build (no-op shim on native)
+
+## Greek License Plate Format
+
+Format: `ΑΒΓ-1234` — three letters followed by four digits.
+
+The letter prefix identifies the prefecture (e.g. `ABE` → Veria, `AMA` → Amalia).
+
+## Getting Started
 
 ### Prerequisites
 
-- Node.js (v16+)
-- npm or yarn
+- Node.js 18+
+- npm
 
 ### Installation
-
-1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-2. Start the app:
+### Running the app
 
 ```bash
-npm start
+npm start          # Expo dev server (all platforms)
+npm run ios        # iOS simulator
+npm run android    # Android emulator
+npm run web        # Web browser
 ```
 
-3. Follow the prompts:
-   - Press `i` to launch iOS simulator
-   - Press `a` to launch Android emulator
-   - Press `w` to open in web browser
-   - Scan the QR code with Expo Go app on your phone
+When `npm start` is running, press `i`, `a`, or `w` to open the respective platform, or scan the QR code with the Expo Go app.
 
-## How It Works
-
-- Enter a Greek license plate (e.g., `ABE-1234`)
-- The app extracts the first 2-3 letters (region code)
-- Looks it up in the Greek prefectures database
-- Returns the area/region name
-
-## Greek License Plate Format
-
-Format: `XYZ-1234` (3 letters + 4 digits)
-
-- First 3 letters = region code (prefecture)
-- Last 4 digits = sequential number
-
-## Adding More Regions
-
-Edit `regions.ts` to add more prefecture mappings. The file contains a object mapping region codes to area names.
-
-## Build for Production
-
-### iOS
+## Testing & Linting
 
 ```bash
-npm install -g eas-cli
-eas build --platform ios
+npm test           # Jest test suite
+npm run lint       # ESLint
+npm run lint:fix   # ESLint with auto-fix
+npm run format     # Prettier (write)
+npm run format:check  # Prettier (check only)
 ```
 
-### Android
+## Web Deployment (Vercel)
+
+The web build is produced by:
 
 ```bash
-npm install -g eas-cli
-eas build --platform android
+npm run build      # runs tests then `expo export --platform web` → dist/
 ```
+
+Vercel is configured via `vercel.json` to run the build command and serve the `dist/` directory.
 
 ## Project Structure
 
-- `App.tsx` - Main app component with UI
-- `regions.ts` - Greek prefecture/region mapping database
-- `app.json` - Expo config
-- `package.json` - Dependencies
+| File / Folder           | Purpose                                                             |
+| ----------------------- | ------------------------------------------------------------------- |
+| `App.tsx`               | Root component — UI, state, plate lookup logic                      |
+| `regions.ts`            | Prefecture code → region name mapping + `lookupPlateRegion`         |
+| `regionTranslations.ts` | Region name translations (Greek / English)                          |
+| `translations.ts`       | UI string translations                                              |
+| `GreekMap.tsx`          | Interactive SVG map of Greece                                       |
+| `Analytics.tsx`         | TypeScript type shim (derives props from `@vercel/analytics/react`) |
+| `Analytics.web.tsx`     | Web runtime — re-exports the real Vercel Analytics component        |
+| `Analytics.native.tsx`  | Native runtime — no-op shim (avoids browser-only globals)           |
+| `app.json`              | Expo configuration                                                  |
+| `vercel.json`           | Vercel build & output configuration                                 |
+| `__tests__/`            | Jest unit tests                                                     |
+
+## Adding More Regions
+
+Edit `regions.ts` to add or update prefecture mappings. The `lookupPlateRegion` function strips formatting and matches the letter prefix case-insensitively.
+
+## Building for Native (EAS)
+
+```bash
+npm install -g eas-cli
+eas build --platform ios      # iOS
+eas build --platform android  # Android
+```
