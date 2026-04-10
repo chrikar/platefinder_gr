@@ -18,7 +18,7 @@ export const translations = {
   },
   gr: {
     appTitle: 'PlateFinder GR',
-    appSubtitle: 'Βρείτε την περιοχή εγγραφής του ελληνικού αυτοκινήτου',
+    appSubtitle: 'Βρείτε την περιοχή εγγραφής ενός ελληνικού αυτοκινήτου',
     inputLabel: 'Εισαγάγετε Πινακίδα:',
     placeholder: 'π.χ., ABE ή ABE-1234',
     searchButton: 'Αναζήτηση',

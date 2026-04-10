@@ -249,6 +249,8 @@ export const greekRegions: Record<string, string> = {
   ΟΡ: 'Evros',
 };
 
+export const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}([-\s]?\d{4})?$/i;
+
 export const lookupPlateRegion = (plate: string): string | null => {
   // Remove special characters
   const cleanPlate = plate.replace(/[-\s]/g, '');

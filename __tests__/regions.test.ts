@@ -1,11 +1,6 @@
-import { lookupPlateRegion, greekRegions, getAllRegions } from '../regions';
+import { lookupPlateRegion, greekRegions, getAllRegions, plateRegex } from '../regions';
 import { getTranslation } from '../translations';
 import { translateRegion } from '../regionTranslations';
-
-// ---------------------------------------------------------------------------
-// Plate regex (duplicated here so changes to App.tsx don't break the tests)
-// ---------------------------------------------------------------------------
-const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}([-\s]?\d{4})?$/i;
 
 // ---------------------------------------------------------------------------
 // plateRegex

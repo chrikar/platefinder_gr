@@ -11,7 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { lookupPlateRegion } from './regions';
+import { lookupPlateRegion, plateRegex } from './regions';
 import { getTranslation, Language } from './translations';
 import { translateRegion } from './regionTranslations';
 import GreekMap from './GreekMap';
@@ -24,8 +24,6 @@ export default function App() {
 
   const t = (key: keyof typeof import('./translations').translations.en) =>
     getTranslation(language, key);
-
-  const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}([-\s]?\d{4})?$/i;
 
   // Derived inline validation state — no extra useState needed
   const trimmed = plate.trim();
