@@ -96,16 +96,14 @@ export default function App() {
           </View>
 
           {/* Buttons */}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[styles.button, styles.clearButton]}
-              onPress={handleClear}
-              accessibilityLabel={t('a11yClearButton')}
-              accessibilityRole="button"
-            >
-              <Text style={styles.buttonText}>{t('clearButton')}</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={[styles.button, styles.clearButton]}
+            onPress={handleClear}
+            accessibilityLabel={t('a11yClearButton')}
+            accessibilityRole="button"
+          >
+            <Text style={styles.buttonText}>{t('clearButton')}</Text>
+          </TouchableOpacity>
 
           {/* Results */}
           {result && (
@@ -204,9 +202,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 6,
   },
-  buttonContainer: {
-    marginBottom: 24,
-  },
   button: {
     paddingVertical: 12,
     borderRadius: 8,
@@ -215,6 +210,7 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     backgroundColor: '#666',
+    marginBottom: 24,
   },
   buttonText: {
     color: '#fff',

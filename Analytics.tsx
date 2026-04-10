@@ -5,6 +5,4 @@ type AnalyticsComponent = typeof import('@vercel/analytics/react').Analytics;
 // at bundle time, but other tooling may still import this file directly.
 // Keep the runtime behavior as a no-op while deriving the type from the
 // real `@vercel/analytics/react` export so props stay in sync.
-export const Analytics: AnalyticsComponent = (..._args) => {
-  return null;
-};
+export const Analytics: AnalyticsComponent = () => null;

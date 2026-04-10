@@ -14,7 +14,7 @@ An Expo (React Native) app and web app that identifies the Greek prefecture behi
 
 Format: `ΑΒΓ-1234` — three letters followed by four digits.
 
-The letter prefix identifies the prefecture (e.g. `ABE` → Veria, `AMA` → Amalia).
+The letter prefix identifies the prefecture (e.g. `YAB` → Athens, `NAB` → Thessaloniki, `YIB` → Piraeus).
 
 ## Getting Started
 

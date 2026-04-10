@@ -1,4 +1,10 @@
-import { lookupPlateRegion, greekRegions, getAllRegions, plateRegex } from '../regions';
+import {
+  lookupPlateRegion,
+  greekRegions,
+  getAllRegions,
+  getPlateCodesForRegion,
+  plateRegex,
+} from '../regions';
 import { getTranslation } from '../translations';
 import { translateRegion } from '../regionTranslations';
 
@@ -110,6 +116,36 @@ describe('greekRegions data integrity', () => {
     const sorted = [...regions].sort();
     expect(regions).toEqual(sorted);
     expect(new Set(regions).size).toBe(regions.length);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// getPlateCodesForRegion
+// ---------------------------------------------------------------------------
+describe('getPlateCodesForRegion', () => {
+  test('returns all codes for a known region', () => {
+    const codes = getPlateCodesForRegion('Thessaloniki');
+    expect(codes.length).toBeGreaterThan(0);
+    expect(codes).toContain('ΝΑ');
+    expect(codes).toContain('ΝΒ');
+  });
+
+  test('every returned code maps back to the requested region', () => {
+    const codes = getPlateCodesForRegion('Piraeus');
+    codes.forEach((code) => {
+      expect(greekRegions[code]).toBe('Piraeus');
+    });
+  });
+
+  test('returns empty array for unknown region', () => {
+    expect(getPlateCodesForRegion('Atlantis')).toEqual([]);
+  });
+
+  test('all returned codes are 2-character strings', () => {
+    const codes = getPlateCodesForRegion('Athens');
+    codes.forEach((code) => {
+      expect(code).toHaveLength(2);
+    });
   });
 });
 
