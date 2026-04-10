@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { Analytics } from '@vercel/analytics/react';
 import { lookupPlateRegion } from './regions';
 import { getTranslation, Language } from './translations';
 import { translateRegion } from './regionTranslations';
@@ -65,6 +66,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" backgroundColor="#1a1a1a" translucent />
+      <Analytics />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
