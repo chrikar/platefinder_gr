@@ -1,3 +1,5 @@
+import { Language } from './translations';
+
 // Greek translations for Greek regions
 
 export const regionTranslations: Record<string, string> = {
@@ -57,7 +59,7 @@ export const regionTranslations: Record<string, string> = {
   Achaia: 'Αχαΐα',
 };
 
-export const translateRegion = (region: string, language: string): string => {
+export const translateRegion = (region: string, language: Language): string => {
   if (language === 'gr') {
     return regionTranslations[region] || region;
   }
