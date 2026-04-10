@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { lookupPlateRegion } from './regions';
 import { getTranslation, Language } from './translations';
 import { translateRegion } from './regionTranslations';
@@ -64,6 +65,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <SpeedInsights />
       <StatusBar style="light" backgroundColor="#1a1a1a" translucent />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
