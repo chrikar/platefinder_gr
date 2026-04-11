@@ -12,7 +12,7 @@ An Expo (React Native) app and web app that identifies the Greek prefecture behi
 
 ## Greek License Plate Format
 
-Format: `ΑΒΓ-1234` — three letters followed by four digits.
+Format: `YAB-1234` — three letters followed by four digits.
 
 The letter prefix identifies the prefecture (e.g. `YAB` → Athens, `NAB` → Thessaloniki, `YIB` → Piraeus).
 
