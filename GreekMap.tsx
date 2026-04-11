@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Svg, { Path, Circle, G, Text as SvgText } from 'react-native-svg';
 import { translateRegion } from './regionTranslations';
@@ -155,9 +155,13 @@ interface GreekMapProps {
   language: Language;
 }
 
-export default function GreekMap({ region, language }: GreekMapProps) {
+function GreekMap({ region, language }: GreekMapProps) {
   const coords = region ? regionCoords[region] : null;
   const dot = coords ? project(coords[0], coords[1]) : null;
+  const label = useMemo(
+    () => (region ? translateRegion(region, language) : null),
+    [region, language]
+  );
 
   const fill = '#2a3a5a';
   const stroke = '#4a6a9a';
@@ -199,7 +203,7 @@ export default function GreekMap({ region, language }: GreekMapProps) {
                 strokeWidth={3}
                 textAnchor={dot[0] > 150 ? 'end' : 'start'}
               >
-                {translateRegion(region, language)}
+                {label}
               </SvgText>
               {/* Fill pass */}
               <SvgText
@@ -210,7 +214,7 @@ export default function GreekMap({ region, language }: GreekMapProps) {
                 fill="#ffffff"
                 textAnchor={dot[0] > 150 ? 'end' : 'start'}
               >
-                {translateRegion(region, language)}
+                {label}
               </SvgText>
             </G>
           )}
@@ -219,6 +223,8 @@ export default function GreekMap({ region, language }: GreekMapProps) {
     </View>
   );
 }
+
+export default React.memo(GreekMap);
 
 const styles = StyleSheet.create({
   container: {
