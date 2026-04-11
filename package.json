@@ -19,6 +19,7 @@
     "@expo/metro-runtime": "~55.0.9",
     "@vercel/analytics": "^2.0.1",
     "expo": "^55.0.14",
+    "expo-haptics": "^55.0.14",
     "expo-status-bar": "~55.0.5",
     "react": "19.2.0",
     "react-dom": "19.2.0",

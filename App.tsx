@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  Animated,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { lookupPlateRegion, plateRegex } from './regions';
@@ -16,12 +17,25 @@ import { getTranslation, Language, TranslationKey } from './translations';
 import { translateRegion } from './regionTranslations';
 import GreekMap from './GreekMap';
 import { Analytics } from './Analytics';
+import * as Haptics from 'expo-haptics';
 
 export default function App() {
   const [plate, setPlate] = useState('');
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [language, setLanguage] = useState<Language>('en');
+  const [fadeAnim] = useState(() => new Animated.Value(0));
+
+  useEffect(() => {
+    if (result || error) {
+      fadeAnim.setValue(0);
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [result, error, fadeAnim]);
 
   const t = (key: TranslationKey) => getTranslation(language, key);
 
@@ -34,6 +48,9 @@ export default function App() {
 
   const lookup = (text: string) => {
     const region = lookupPlateRegion(text);
+    if (region && region !== result) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    }
     setResult(region ?? null);
     setError(region ? null : t('notFound'));
   };
@@ -113,17 +130,17 @@ export default function App() {
 
           {/* Results */}
           {result && (
-            <View style={styles.resultContainer}>
+            <Animated.View style={[styles.resultContainer, { opacity: fadeAnim }]}>
               <Text style={styles.resultLabel}>{t('regionLabel')}</Text>
               <Text style={styles.resultText}>{translateRegion(result, language)}</Text>
-            </View>
+            </Animated.View>
           )}
 
           {/* Errors */}
           {error && (
-            <View style={styles.errorContainer}>
+            <Animated.View style={[styles.errorContainer, { opacity: fadeAnim }]}>
               <Text style={styles.errorText}>{error}</Text>
-            </View>
+            </Animated.View>
           )}
         </ScrollView>
       </KeyboardAvoidingView>
