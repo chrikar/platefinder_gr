@@ -2,6 +2,9 @@
 
 An Expo (React Native) app and web app that identifies the Greek prefecture behind any license plate. Enter a plate and instantly see the region it was registered in, with an interactive map highlight. Runs on iOS, Android, and the web (deployed on Vercel).
 
+You can try the [web version](https://platefinder-gr.vercel.app/).
+It's also mobile-friendly.
+
 ## Features
 
 - Lookup any Greek license plate prefix and get the corresponding prefecture
