@@ -90,3 +90,7 @@ npm install -g eas-cli
 eas build --platform ios      # iOS
 eas build --platform android  # Android
 ```
+
+## Author
+
+[Christos Kargas](https://github.com/chrikar)

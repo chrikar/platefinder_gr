@@ -10,6 +10,7 @@ import {
   ScrollView,
   Platform,
   Animated,
+  Linking,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { lookupPlateRegion, plateRegex } from './regions';
@@ -142,6 +143,17 @@ export default function App() {
               <Text style={styles.errorText}>{error}</Text>
             </Animated.View>
           )}
+
+          {/* Footer */}
+          <View style={styles.footer}>
+            <View style={styles.footerDivider} />
+            <View style={styles.footerRow}>
+              <Text style={styles.footerText}>© 2026 </Text>
+              <TouchableOpacity onPress={() => Linking.openURL('https://github.com/chrikar')}>
+                <Text style={styles.footerLink}>Christos Kargas</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
       {Platform.OS === 'web' ? <Analytics /> : null}
@@ -256,5 +268,30 @@ const styles = StyleSheet.create({
   errorText: {
     color: '#fff',
     fontSize: 14,
+  },
+  footer: {
+    alignItems: 'center',
+    marginTop: 40,
+    paddingBottom: 8,
+  },
+  footerDivider: {
+    width: 48,
+    height: 1,
+    backgroundColor: '#333',
+    marginBottom: 16,
+  },
+  footerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  footerText: {
+    color: '#555',
+    fontSize: 12,
+  },
+  footerLink: {
+    color: '#0066ff',
+    fontSize: 12,
+    fontWeight: '600',
+    letterSpacing: 0.4,
   },
 });

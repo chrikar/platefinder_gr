@@ -3,6 +3,7 @@
   "name": "platefinder-gr",
   "version": "1.0.0",
   "description": "Find Greek car registration area from license plate",
+  "author": "Christos Kargas (https://github.com/chrikar)",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
