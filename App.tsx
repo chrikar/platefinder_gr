@@ -14,7 +14,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { lookupPlateRegion, plateRegex } from './regions';
+import { lookupPlateRegion, normalizePlateInput, plateRegex } from './regions';
 import { getTranslation, Language, TranslationKey } from './translations';
 import { translateRegion } from './regionTranslations';
 import GreekMap from './GreekMap';
@@ -43,10 +43,10 @@ export default function App() {
   const t = (key: TranslationKey) => getTranslation(language, key);
 
   // Derived inline validation state — no extra useState needed
-  const trimmed = plate.trim();
-  const isValidFormat = plateRegex.test(trimmed);
+  const normalizedPlate = normalizePlateInput(plate);
+  const isValidFormat = plateRegex.test(normalizedPlate);
   // Flag as invalid once the user has typed enough characters to evaluate (3+ chars)
-  const showFormatError = trimmed.length >= 3 && !isValidFormat;
+  const showFormatError = normalizedPlate.length >= 3 && !isValidFormat;
   const inputBorderColor = isValidFormat ? '#00cc66' : showFormatError ? '#ff3333' : '#0066ff';
 
   const lookup = (text: string) => {
@@ -104,7 +104,7 @@ export default function App() {
                 accessibilityLabel={t('a11yPlateInput')}
                 onChangeText={(text) => {
                   setPlate(text);
-                  if (plateRegex.test(text.trim())) {
+                  if (plateRegex.test(normalizePlateInput(text))) {
                     lookup(text);
                   } else {
                     setResult(null);

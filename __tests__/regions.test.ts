@@ -16,6 +16,8 @@ describe('plateRegex', () => {
     'YAB-1234', // Latin uppercase with dash
     'yab-1234', // Latin lowercase with dash
     'YAB 1234', // Latin with space
+    'YAB - 1234', // Latin with spaced separator
+    'YAB.1234', // Latin with dot separator
     'YAB1234', // Latin no separator
     'ΥΑΒ-1234', // Greek uppercase with dash
     'υαβ-1234', // Greek lowercase with dash
@@ -69,8 +71,12 @@ describe('lookupPlateRegion', () => {
     expect(lookupPlateRegion('YAB1234')).toBe('Athens');
   });
 
-  test('handles input with space separator', () => {
-    expect(lookupPlateRegion('YAB 1234')).toBe('Athens');
+  test('handles input with spaced separator', () => {
+    expect(lookupPlateRegion('YAB - 1234')).toBe('Athens');
+  });
+
+  test('handles input with dot separator', () => {
+    expect(lookupPlateRegion('YAB.1234')).toBe('Athens');
   });
 
   test('accepts a valid letters-only plate prefix', () => {
