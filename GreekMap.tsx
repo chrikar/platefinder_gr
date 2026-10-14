@@ -45,8 +45,8 @@ function GreekMap({ region, language }: GreekMapProps) {
               <Path
                 key={code}
                 d={path}
-                fill={isSelected ? '#0066ff' : '#2a3a5a'}
-                stroke={isSelected ? '#c6ddff' : '#7890ad'}
+                fill={isSelected ? '#4b8dff' : '#263b56'}
+                stroke={isSelected ? '#c6ddff' : '#7189a5'}
                 strokeWidth={isSelected ? 1.5 : 0.65}
                 fillRule="evenodd"
               />
@@ -54,12 +54,12 @@ function GreekMap({ region, language }: GreekMapProps) {
           })}
           {dot && (
             <G>
-              <Circle cx={dot[0]} cy={dot[1]} r={10} fill="#0066ff" opacity={0.3} />
+              <Circle cx={dot[0]} cy={dot[1]} r={10} fill="#4b8dff" opacity={0.3} />
               <Circle
                 cx={dot[0]}
                 cy={dot[1]}
                 r={4.5}
-                fill="#0066ff"
+                fill="#4b8dff"
                 stroke="#ffffff"
                 strokeWidth={1.5}
               />
@@ -83,12 +83,12 @@ const styles = StyleSheet.create({
   },
   map: {
     aspectRatio: mapWidth / mapHeight,
-    backgroundColor: '#1a2a3a',
-    borderRadius: 8,
+    backgroundColor: '#111e30',
+    borderRadius: 12,
     overflow: 'hidden',
   },
   caption: {
-    color: '#aaa',
+    color: '#9eacc0',
     fontSize: 11,
     lineHeight: 16,
     marginTop: 6,
