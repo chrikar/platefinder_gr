@@ -12,6 +12,8 @@ export const translations = {
     formatHint: 'Format: 3 letters, optionally followed by 4 digits (e.g. ABE-1234)',
     mapBoundaryLegend: 'Selected boundary',
     mapMarkerLegend: 'Approximate location',
+    mapDetailTitle: 'Island detail',
+    mapDetailCaption: 'Zoomed view for visibility; it does not indicate more precise boundaries.',
     regionLabel: 'Region:',
     mapCaption:
       'Historical boundaries (Eurostat/GISCO, 2010). Marker-only locations are approximate.',
@@ -33,6 +35,8 @@ export const translations = {
     formatHint: 'Μορφή: 3 γράμματα, προαιρετικά ακολουθούμενα από 4 ψηφία (π.χ. ABE-1234)',
     mapBoundaryLegend: 'Επιλεγμένα όρια',
     mapMarkerLegend: 'Κατά προσέγγιση τοποθεσία',
+    mapDetailTitle: 'Λεπτομέρεια νησιού',
+    mapDetailCaption: 'Μεγεθυμένη προβολή για καλύτερη ορατότητα· δεν υποδηλώνει ακριβέστερα όρια.',
     regionLabel: 'Περιοχή:',
     mapCaption:
       'Ιστορικά όρια (Eurostat/GISCO, 2010). Οι περιοχές με δείκτη είναι κατά προσέγγιση.',
