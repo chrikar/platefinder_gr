@@ -47,7 +47,7 @@ export default function App() {
   const isValidFormat = plateRegex.test(normalizedPlate);
   // Flag as invalid once the user has typed enough characters to evaluate (3+ chars)
   const showFormatError = normalizedPlate.length >= 3 && !isValidFormat;
-  const inputBorderColor = isValidFormat ? '#00cc66' : showFormatError ? '#ff3333' : '#0066ff';
+  const inputBorderColor = isValidFormat ? '#36b89a' : showFormatError ? '#e87979' : '#3b82f6';
 
   const lookup = (text: string) => {
     const region = lookupPlateRegion(text);
@@ -76,7 +76,6 @@ export default function App() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          {/* Header with Language Toggle */}
           <View style={styles.headerContainer}>
             <View style={styles.header}>
               <Text style={styles.title}>{t('appTitle')}</Text>
@@ -92,14 +91,16 @@ export default function App() {
             </TouchableOpacity>
           </View>
 
-          {/* Input Section */}
           <View style={styles.inputSection}>
             <Text style={styles.label}>{t('inputLabel')}</Text>
-            <View style={styles.inputRow}>
+            <View style={[styles.inputRow, { borderColor: inputBorderColor }]}>
+              <View style={styles.plateCountry}>
+                <Text style={styles.plateCountryText}>GR</Text>
+              </View>
               <TextInput
-                style={[styles.input, { borderColor: inputBorderColor }]}
+                style={styles.input}
                 placeholder={t('placeholder')}
-                placeholderTextColor="#999"
+                placeholderTextColor="#8290a3"
                 value={plate}
                 accessibilityLabel={t('a11yPlateInput')}
                 onChangeText={(text) => {
@@ -128,7 +129,6 @@ export default function App() {
             {showFormatError && <Text style={styles.inputHint}>{t('invalidFormat')}</Text>}
           </View>
 
-          {/* Results and map */}
           <View style={[styles.resultsLayout, isWideLayout && styles.resultsLayoutWide]}>
             {result && (
               <Animated.View
@@ -160,7 +160,6 @@ export default function App() {
             </View>
           </View>
 
-          {/* Footer */}
           <View style={styles.footer}>
             <View style={styles.footerDivider} />
             <View style={styles.footerRow}>
@@ -180,13 +179,14 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#0b1220',
   },
   keyboardView: {
     flex: 1,
   },
   content: {
-    padding: 20,
+    paddingHorizontal: 24,
+    paddingTop: 32,
     paddingBottom: 40,
     width: '100%',
     maxWidth: 1040,
@@ -196,30 +196,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 40,
+    marginBottom: 32,
   },
   header: {
     flex: 1,
   },
   title: {
-    fontSize: 32,
+    fontSize: 34,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#f4f7fb',
     marginBottom: 8,
+    letterSpacing: -0.6,
   },
   subtitle: {
     fontSize: 14,
-    color: '#aaa',
+    color: '#a5b1c2',
+    lineHeight: 21,
   },
   languageToggle: {
-    backgroundColor: '#0066ff',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 6,
-    marginTop: 4,
+    backgroundColor: '#17243a',
+    borderWidth: 1,
+    borderColor: '#2b3c57',
+    paddingHorizontal: 14,
+    paddingVertical: 9,
+    borderRadius: 10,
+    marginTop: 2,
   },
   languageToggleText: {
-    color: '#fff',
+    color: '#b9d4ff',
     fontWeight: '600',
     fontSize: 12,
   },
@@ -245,42 +249,65 @@ const styles = StyleSheet.create({
   inputRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    minHeight: 58,
+    borderWidth: 2,
+    borderRadius: 12,
+    backgroundColor: '#f5f7fa',
+    overflow: 'hidden',
+  },
+  plateCountry: {
+    width: 48,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1d4f91',
+    borderRightWidth: 1,
+    borderRightColor: '#d6dfeb',
+  },
+  plateCountryText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 1,
   },
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#fff',
-    marginBottom: 8,
+    color: '#d2dbea',
+    marginBottom: 10,
   },
   input: {
     flex: 1,
-    borderWidth: 2,
-    borderColor: '#0066ff',
-    borderRadius: 8,
-    padding: 12,
-    paddingRight: 40,
+    height: '100%',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    paddingRight: 44,
     fontSize: 18,
-    color: '#fff',
-    backgroundColor: '#2a2a2a',
+    fontWeight: '600',
+    letterSpacing: 0.3,
+    color: '#172235',
+    backgroundColor: '#f5f7fa',
   },
   clearAdornment: {
     position: 'absolute',
-    right: 12,
+    right: 10,
     padding: 4,
   },
   clearAdornmentText: {
-    color: '#aaa',
+    color: '#66758b',
     fontSize: 16,
   },
   inputHint: {
-    color: '#ff6666',
+    color: '#f19a9a',
     fontSize: 12,
-    marginTop: 6,
+    marginTop: 8,
   },
   resultContainer: {
-    backgroundColor: '#0066ff',
-    borderRadius: 8,
-    padding: 16,
+    backgroundColor: '#14243a',
+    borderColor: '#2b4a70',
+    borderWidth: 1,
+    borderRadius: 14,
+    padding: 20,
     marginBottom: 16,
   },
   resultContainerWide: {
@@ -288,20 +315,23 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   resultLabel: {
-    color: '#ddd',
+    color: '#8ebaff',
     fontSize: 12,
     fontWeight: '600',
     marginBottom: 4,
+    letterSpacing: 0.5,
   },
   resultText: {
-    color: '#fff',
-    fontSize: 20,
+    color: '#f4f7fb',
+    fontSize: 22,
     fontWeight: 'bold',
   },
   errorContainer: {
-    backgroundColor: '#ff3333',
-    borderRadius: 8,
-    padding: 12,
+    backgroundColor: '#321f2a',
+    borderColor: '#68404a',
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 14,
     marginBottom: 16,
   },
   errorContainerWide: {
@@ -309,7 +339,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   errorText: {
-    color: '#fff',
+    color: '#ffd2d2',
     fontSize: 14,
   },
   footer: {
@@ -320,7 +350,7 @@ const styles = StyleSheet.create({
   footerDivider: {
     width: 48,
     height: 1,
-    backgroundColor: '#333',
+    backgroundColor: '#28364a',
     marginBottom: 16,
   },
   footerRow: {
@@ -328,11 +358,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footerText: {
-    color: '#555',
+    color: '#718096',
     fontSize: 12,
   },
   footerLink: {
-    color: '#0066ff',
+    color: '#8ebaff',
     fontSize: 12,
     fontWeight: '600',
     letterSpacing: 0.4,
