@@ -57,6 +57,7 @@ When `npm start` is running, press `i`, `a`, or `w` to open the respective platf
 ```bash
 npm test           # Jest test suite
 npm run lint       # ESLint
+npm run typecheck  # TypeScript check
 npm run lint:fix   # ESLint with auto-fix
 npm run format     # Prettier (write)
 npm run format:check  # Prettier (check only)
@@ -67,10 +68,12 @@ npm run format:check  # Prettier (check only)
 The web build is produced by:
 
 ```bash
-npm run build      # runs tests then `expo export --platform web` → dist/
+npm run build      # `expo export --platform web` → dist/
 ```
 
 Vercel is configured via `vercel.json` to run the build command and serve the `dist/` directory.
+
+GitHub Actions runs the tests, lint, TypeScript check, and web export on pushes and pull requests to `main`.
 
 ## Project Structure
 
