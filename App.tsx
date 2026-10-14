@@ -33,7 +33,7 @@ export default function App() {
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 200,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== 'web',
       }).start();
     }
   }, [result, error, fadeAnim]);
