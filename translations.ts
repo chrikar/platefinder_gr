@@ -6,6 +6,9 @@ export const translations = {
     appSubtitle: 'Find Greek car registration area',
     inputLabel: 'Enter License Plate:',
     placeholder: 'e.g., ABE or ABE-1234',
+    emptyStateTitle: 'Find where a plate is from',
+    emptyStateBody: 'Enter a plate or try an example:',
+    platePrefixLabel: 'Plate prefix',
     regionLabel: 'Region:',
     mapCaption:
       'Historical boundaries (Eurostat/GISCO, 2010). Marker-only locations are approximate.',
@@ -21,6 +24,9 @@ export const translations = {
     appSubtitle: 'Βρείτε την περιοχή εγγραφής ενός ελληνικού αυτοκινήτου',
     inputLabel: 'Εισαγάγετε Πινακίδα:',
     placeholder: 'π.χ., ABE ή ABE-1234',
+    emptyStateTitle: 'Βρείτε από πού είναι μια πινακίδα',
+    emptyStateBody: 'Εισαγάγετε μια πινακίδα ή δοκιμάστε ένα παράδειγμα:',
+    platePrefixLabel: 'Κωδικός πινακίδας',
     regionLabel: 'Περιοχή:',
     mapCaption:
       'Ιστορικά όρια (Eurostat/GISCO, 2010). Οι περιοχές με δείκτη είναι κατά προσέγγιση.',

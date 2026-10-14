@@ -39,19 +39,40 @@ function GreekMap({ region, language }: GreekMapProps) {
         style={styles.map}
       >
         <G>
+          {boundaryCode && regionBoundaryPaths[boundaryCode] && (
+            <Path
+              d={regionBoundaryPaths[boundaryCode]}
+              fill="none"
+              stroke="#72aaff"
+              strokeWidth={5}
+              strokeOpacity={0.55}
+              strokeLinejoin="round"
+              fillRule="evenodd"
+            />
+          )}
           {Object.entries(regionBoundaryPaths).map(([code, path]) => {
             const isSelected = code === boundaryCode;
             return (
               <Path
                 key={code}
                 d={path}
-                fill={isSelected ? '#4b8dff' : '#263b56'}
+                fill={isSelected ? '#3d82f6' : '#263b56'}
                 stroke={isSelected ? '#c6ddff' : '#7189a5'}
                 strokeWidth={isSelected ? 1.5 : 0.65}
                 fillRule="evenodd"
               />
             );
           })}
+          {boundaryCode && regionBoundaryPaths[boundaryCode] && (
+            <Path
+              d={regionBoundaryPaths[boundaryCode]}
+              fill="none"
+              stroke="#e3efff"
+              strokeWidth={1.5}
+              strokeLinejoin="round"
+              fillRule="evenodd"
+            />
+          )}
           {dot && (
             <G>
               <Circle cx={dot[0]} cy={dot[1]} r={10} fill="#4b8dff" opacity={0.3} />

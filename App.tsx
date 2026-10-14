@@ -58,11 +58,23 @@ export default function App() {
     setError(region ? null : t('notFound'));
   };
 
+  const handlePlateChange = (text: string) => {
+    setPlate(text);
+    if (plateRegex.test(normalizePlateInput(text))) {
+      lookup(text);
+    } else {
+      setResult(null);
+      setError(null);
+    }
+  };
+
   const handleClear = () => {
     setPlate('');
     setResult(null);
     setError(null);
   };
+
+  const examplePlates = ['YAB-1234', 'NAB-1234', 'YIB-1234'];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -103,15 +115,7 @@ export default function App() {
                 placeholderTextColor="#8290a3"
                 value={plate}
                 accessibilityLabel={t('a11yPlateInput')}
-                onChangeText={(text) => {
-                  setPlate(text);
-                  if (plateRegex.test(normalizePlateInput(text))) {
-                    lookup(text);
-                  } else {
-                    setResult(null);
-                    setError(null);
-                  }
-                }}
+                onChangeText={handlePlateChange}
                 autoCapitalize="characters"
               />
               {plate.length > 0 && (
@@ -129,6 +133,26 @@ export default function App() {
             {showFormatError && <Text style={styles.inputHint}>{t('invalidFormat')}</Text>}
           </View>
 
+          {!result && !error && plate.length === 0 && (
+            <View style={styles.emptyState}>
+              <Text style={styles.emptyStateTitle}>{t('emptyStateTitle')}</Text>
+              <Text style={styles.emptyStateBody}>{t('emptyStateBody')}</Text>
+              <View style={styles.exampleRow}>
+                {examplePlates.map((example) => (
+                  <TouchableOpacity
+                    key={example}
+                    style={styles.exampleButton}
+                    onPress={() => handlePlateChange(example)}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${t('a11yPlateInput')}: ${example}`}
+                  >
+                    <Text style={styles.exampleText}>{example}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          )}
+
           <View style={[styles.resultsLayout, isWideLayout && styles.resultsLayoutWide]}>
             {result && (
               <Animated.View
@@ -140,6 +164,15 @@ export default function App() {
               >
                 <Text style={styles.resultLabel}>{t('regionLabel')}</Text>
                 <Text style={styles.resultText}>{translateRegion(result, language)}</Text>
+                <View style={styles.prefixRow}>
+                  <Text style={styles.prefixLabel}>{t('platePrefixLabel')}</Text>
+                  <View style={styles.prefixBadge}>
+                    <Text style={styles.prefixCountry}>GR</Text>
+                    <Text style={styles.prefixText}>
+                      {normalizedPlate.slice(0, 3).toUpperCase()}
+                    </Text>
+                  </View>
+                </View>
               </Animated.View>
             )}
 
@@ -302,6 +335,45 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 8,
   },
+  emptyState: {
+    backgroundColor: '#111e30',
+    borderColor: '#263b56',
+    borderWidth: 1,
+    borderRadius: 16,
+    padding: 18,
+    marginBottom: 20,
+  },
+  emptyStateTitle: {
+    color: '#f4f7fb',
+    fontSize: 17,
+    fontWeight: '700',
+    marginBottom: 5,
+  },
+  emptyStateBody: {
+    color: '#a5b1c2',
+    fontSize: 13,
+    lineHeight: 19,
+  },
+  exampleRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 13,
+  },
+  exampleButton: {
+    backgroundColor: '#192a40',
+    borderWidth: 1,
+    borderColor: '#344b68',
+    borderRadius: 8,
+    paddingHorizontal: 11,
+    paddingVertical: 8,
+  },
+  exampleText: {
+    color: '#c8dcfa',
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.4,
+  },
   resultContainer: {
     backgroundColor: '#14243a',
     borderColor: '#2b4a70',
@@ -325,6 +397,43 @@ const styles = StyleSheet.create({
     color: '#f4f7fb',
     fontSize: 22,
     fontWeight: 'bold',
+  },
+  prefixRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 10,
+    marginTop: 14,
+  },
+  prefixLabel: {
+    color: '#a5b1c2',
+    fontSize: 12,
+  },
+  prefixBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    overflow: 'hidden',
+    backgroundColor: '#f5f7fa',
+    borderRadius: 6,
+  },
+  prefixCountry: {
+    alignSelf: 'stretch',
+    textAlignVertical: 'center',
+    backgroundColor: '#1d4f91',
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 0.5,
+    paddingHorizontal: 7,
+    paddingVertical: 5,
+  },
+  prefixText: {
+    color: '#172235',
+    fontSize: 12,
+    fontWeight: '800',
+    letterSpacing: 1,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
   },
   errorContainer: {
     backgroundColor: '#321f2a',
