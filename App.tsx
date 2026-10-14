@@ -135,60 +135,62 @@ export default function App() {
             </Text>
           </View>
 
-          {!result && !error && plate.length === 0 && (
-            <View style={styles.emptyState}>
-              <Text style={styles.emptyStateTitle}>{t('emptyStateTitle')}</Text>
-              <Text style={styles.emptyStateBody}>{t('emptyStateBody')}</Text>
-              <View style={styles.exampleRow}>
-                {examplePlates.map((example) => (
-                  <TouchableOpacity
-                    key={example}
-                    style={styles.exampleButton}
-                    onPress={() => handlePlateChange(example)}
-                    accessibilityRole="button"
-                    accessibilityLabel={`${t('a11yPlateInput')}: ${example}`}
-                  >
-                    <Text style={styles.exampleText}>{example}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-          )}
-
           <View style={[styles.resultsLayout, isWideLayout && styles.resultsLayoutWide]}>
-            {result && (
-              <Animated.View
-                style={[
-                  styles.resultContainer,
-                  isWideLayout && styles.resultContainerWide,
-                  { opacity: fadeAnim },
-                ]}
-              >
-                <Text style={styles.resultLabel}>{t('regionLabel')}</Text>
-                <Text style={styles.resultText}>{translateRegion(result, language)}</Text>
-                <View style={styles.prefixRow}>
-                  <Text style={styles.prefixLabel}>{t('platePrefixLabel')}</Text>
-                  <View style={styles.prefixBadge}>
-                    <Text style={styles.prefixCountry}>GR</Text>
-                    <Text style={styles.prefixText}>
-                      {normalizedPlate.slice(0, 3).toUpperCase()}
-                    </Text>
+            <View style={[styles.resultColumn, isWideLayout && styles.resultColumnWide]}>
+              {!result && !error && plate.length === 0 && (
+                <View style={styles.emptyState}>
+                  <Text style={styles.emptyStateTitle}>{t('emptyStateTitle')}</Text>
+                  <Text style={styles.emptyStateBody}>{t('emptyStateBody')}</Text>
+                  <View style={styles.exampleRow}>
+                    {examplePlates.map((example) => (
+                      <TouchableOpacity
+                        key={example}
+                        style={styles.exampleButton}
+                        onPress={() => handlePlateChange(example)}
+                        accessibilityRole="button"
+                        accessibilityLabel={`${t('a11yPlateInput')}: ${example}`}
+                      >
+                        <Text style={styles.exampleText}>{example}</Text>
+                      </TouchableOpacity>
+                    ))}
                   </View>
                 </View>
-              </Animated.View>
-            )}
+              )}
 
-            {error && (
-              <Animated.View
-                style={[
-                  styles.errorContainer,
-                  isWideLayout && styles.errorContainerWide,
-                  { opacity: fadeAnim },
-                ]}
-              >
-                <Text style={styles.errorText}>{error}</Text>
-              </Animated.View>
-            )}
+              {result && (
+                <Animated.View
+                  style={[
+                    styles.resultContainer,
+                    isWideLayout && styles.resultContainerWide,
+                    { opacity: fadeAnim },
+                  ]}
+                >
+                  <Text style={styles.resultLabel}>{t('regionLabel')}</Text>
+                  <Text style={styles.resultText}>{translateRegion(result, language)}</Text>
+                  <View style={styles.prefixRow}>
+                    <Text style={styles.prefixLabel}>{t('platePrefixLabel')}</Text>
+                    <View style={styles.prefixBadge}>
+                      <Text style={styles.prefixCountry}>GR</Text>
+                      <Text style={styles.prefixText}>
+                        {normalizedPlate.slice(0, 3).toUpperCase()}
+                      </Text>
+                    </View>
+                  </View>
+                </Animated.View>
+              )}
+
+              {error && (
+                <Animated.View
+                  style={[
+                    styles.errorContainer,
+                    isWideLayout && styles.errorContainerWide,
+                    { opacity: fadeAnim },
+                  ]}
+                >
+                  <Text style={styles.errorText}>{error}</Text>
+                </Animated.View>
+              )}
+            </View>
 
             <View style={[styles.mapColumn, isWideLayout && styles.mapColumnWide]}>
               <GreekMap region={result} language={language} />
@@ -270,15 +272,23 @@ const styles = StyleSheet.create({
   },
   resultsLayoutWide: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'stretch',
     gap: 24,
+  },
+  resultColumn: {
+    width: '100%',
+  },
+  resultColumnWide: {
+    flex: 1,
+    justifyContent: 'center',
+    minWidth: 0,
   },
   mapColumn: {
     width: '100%',
     alignItems: 'center',
   },
   mapColumnWide: {
-    flex: 1.4,
+    flex: 1,
     minWidth: 0,
   },
   inputRow: {
@@ -388,7 +398,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   resultContainerWide: {
-    flex: 1,
     marginBottom: 0,
   },
   resultLabel: {
@@ -449,7 +458,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   errorContainerWide: {
-    flex: 1,
     marginBottom: 0,
   },
   errorText: {
