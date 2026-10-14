@@ -73,6 +73,10 @@ describe('lookupPlateRegion', () => {
     expect(lookupPlateRegion('YAB 1234')).toBe('Athens');
   });
 
+  test('accepts a valid letters-only plate prefix', () => {
+    expect(lookupPlateRegion('YAB')).toBe('Athens');
+  });
+
   test('returns Piraeus for ΥΙ prefix', () => {
     expect(lookupPlateRegion('YIB-1234')).toBe('Piraeus');
   });
@@ -91,6 +95,13 @@ describe('lookupPlateRegion', () => {
   test('returns null for empty string', () => {
     expect(lookupPlateRegion('')).toBeNull();
   });
+
+  test.each(['YAB-123', 'YAB-12345', 'Y1B-1234', 'YAB_1234', 'AB-12X4'])(
+    'returns null for malformed input: %s',
+    (plate) => {
+      expect(lookupPlateRegion(plate)).toBeNull();
+    }
+  );
 });
 
 // ---------------------------------------------------------------------------
