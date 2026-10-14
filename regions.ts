@@ -249,20 +249,21 @@ export const greekRegions: Record<string, string> = {
   ΟΡ: 'Evros',
 };
 
-export const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}([-\s]?\d{4})?$/i;
+export const plateRegex = /^([A-ZΑ-Ω]{3})(?:[\s\-./]*\d{4})?$/i;
+
+export const normalizePlateInput = (plate: string): string => {
+  return plate.trim().replace(/[\s\-./]+/g, '');
+};
 
 export const lookupPlateRegion = (plate: string): string | null => {
-  const trimmedPlate = plate.trim();
+  const normalizedPlate = normalizePlateInput(plate);
 
-  if (!trimmedPlate || !plateRegex.test(trimmedPlate)) {
+  if (!normalizedPlate || !plateRegex.test(normalizedPlate)) {
     return null;
   }
 
-  // Remove separators before extracting the two-letter region prefix.
-  const cleanPlate = trimmedPlate.replace(/[-\s]/g, '');
-
   // Convert Latin characters to Greek if needed.
-  const greekPlate = convertLatinToGreek(cleanPlate);
+  const greekPlate = convertLatinToGreek(normalizedPlate);
 
   // Extract the first two letters of the plate, which encode the region.
   const regionCode = greekPlate.substring(0, 2).toUpperCase();
