@@ -88,6 +88,16 @@ function GreekMap({ region, language }: GreekMapProps) {
           )}
         </G>
       </Svg>
+      <View style={styles.legend}>
+        <View style={styles.legendItem}>
+          <View style={styles.boundarySwatch} />
+          <Text style={styles.legendText}>{getTranslation(language, 'mapBoundaryLegend')}</Text>
+        </View>
+        <View style={styles.legendItem}>
+          <View style={styles.markerSwatch} />
+          <Text style={styles.legendText}>{getTranslation(language, 'mapMarkerLegend')}</Text>
+        </View>
+      </View>
       <Text style={styles.caption}>{getTranslation(language, 'mapCaption')}</Text>
     </View>
   );
@@ -114,5 +124,38 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     marginTop: 6,
     textAlign: 'center',
+  },
+  legend: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    columnGap: 16,
+    rowGap: 6,
+    marginTop: 10,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  boundarySwatch: {
+    width: 12,
+    height: 12,
+    backgroundColor: '#3d82f6',
+    borderColor: '#c6ddff',
+    borderWidth: 1,
+    borderRadius: 3,
+  },
+  markerSwatch: {
+    width: 8,
+    height: 8,
+    backgroundColor: '#4b8dff',
+    borderColor: '#ffffff',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  legendText: {
+    color: '#9eacc0',
+    fontSize: 11,
   },
 });
