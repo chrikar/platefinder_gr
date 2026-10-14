@@ -130,7 +130,9 @@ export default function App() {
                 </TouchableOpacity>
               )}
             </View>
-            {showFormatError && <Text style={styles.inputHint}>{t('invalidFormat')}</Text>}
+            <Text style={[styles.inputHint, showFormatError && styles.inputHintError]}>
+              {showFormatError ? t('invalidFormat') : t('formatHint')}
+            </Text>
           </View>
 
           {!result && !error && plate.length === 0 && (
@@ -331,9 +333,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   inputHint: {
-    color: '#f19a9a',
+    color: '#9eacc0',
     fontSize: 12,
     marginTop: 8,
+  },
+  inputHintError: {
+    color: '#f19a9a',
   },
   emptyState: {
     backgroundColor: '#111e30',
