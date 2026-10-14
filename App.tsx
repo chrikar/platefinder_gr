@@ -11,6 +11,7 @@ import {
   Platform,
   Animated,
   Linking,
+  useWindowDimensions,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { lookupPlateRegion, plateRegex } from './regions';
@@ -26,6 +27,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [language, setLanguage] = useState<Language>('en');
   const [fadeAnim] = useState(() => new Animated.Value(0));
+  const isWideLayout = useWindowDimensions().width >= 800;
 
   useEffect(() => {
     if (result || error) {
@@ -90,9 +92,6 @@ export default function App() {
             </TouchableOpacity>
           </View>
 
-          {/* Map */}
-          <GreekMap region={result} language={language} />
-
           {/* Input Section */}
           <View style={styles.inputSection}>
             <Text style={styles.label}>{t('inputLabel')}</Text>
@@ -129,20 +128,37 @@ export default function App() {
             {showFormatError && <Text style={styles.inputHint}>{t('invalidFormat')}</Text>}
           </View>
 
-          {/* Results */}
-          {result && (
-            <Animated.View style={[styles.resultContainer, { opacity: fadeAnim }]}>
-              <Text style={styles.resultLabel}>{t('regionLabel')}</Text>
-              <Text style={styles.resultText}>{translateRegion(result, language)}</Text>
-            </Animated.View>
-          )}
+          {/* Results and map */}
+          <View style={[styles.resultsLayout, isWideLayout && styles.resultsLayoutWide]}>
+            {result && (
+              <Animated.View
+                style={[
+                  styles.resultContainer,
+                  isWideLayout && styles.resultContainerWide,
+                  { opacity: fadeAnim },
+                ]}
+              >
+                <Text style={styles.resultLabel}>{t('regionLabel')}</Text>
+                <Text style={styles.resultText}>{translateRegion(result, language)}</Text>
+              </Animated.View>
+            )}
 
-          {/* Errors */}
-          {error && (
-            <Animated.View style={[styles.errorContainer, { opacity: fadeAnim }]}>
-              <Text style={styles.errorText}>{error}</Text>
-            </Animated.View>
-          )}
+            {error && (
+              <Animated.View
+                style={[
+                  styles.errorContainer,
+                  isWideLayout && styles.errorContainerWide,
+                  { opacity: fadeAnim },
+                ]}
+              >
+                <Text style={styles.errorText}>{error}</Text>
+              </Animated.View>
+            )}
+
+            <View style={[styles.mapColumn, isWideLayout && styles.mapColumnWide]}>
+              <GreekMap region={result} language={language} />
+            </View>
+          </View>
 
           {/* Footer */}
           <View style={styles.footer}>
@@ -172,6 +188,9 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
     paddingBottom: 40,
+    width: '100%',
+    maxWidth: 1040,
+    alignSelf: 'center',
   },
   headerContainer: {
     flexDirection: 'row',
@@ -206,6 +225,22 @@ const styles = StyleSheet.create({
   },
   inputSection: {
     marginBottom: 24,
+  },
+  resultsLayout: {
+    width: '100%',
+  },
+  resultsLayoutWide: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 24,
+  },
+  mapColumn: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  mapColumnWide: {
+    flex: 1.4,
+    minWidth: 0,
   },
   inputRow: {
     flexDirection: 'row',
@@ -248,6 +283,10 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 16,
   },
+  resultContainerWide: {
+    flex: 1,
+    marginBottom: 0,
+  },
   resultLabel: {
     color: '#ddd',
     fontSize: 12,
@@ -264,6 +303,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
+  },
+  errorContainerWide: {
+    flex: 1,
+    marginBottom: 0,
   },
   errorText: {
     color: '#fff',

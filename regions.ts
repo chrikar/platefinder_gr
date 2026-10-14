@@ -1,6 +1,6 @@
-// Greek license plate region mapping - OFFICIAL DATA
-// Source: Wikipedia - Πινακίδες κυκλοφορίας οχημάτων της Ελλάδας
-// First two letters map to Greek regions
+// Greek license plate region mapping.
+// Prefix reference: https://el.wikipedia.org/wiki/Πινακίδες_κυκλοφορίας_οχημάτων_της_Ελλάδας
+// Last checked: 2026-10-14. Region names use the app's canonical English labels.
 
 // Latin to Greek character mapping (for user convenience)
 const latinToGreek: Record<string, string> = {
@@ -252,14 +252,20 @@ export const greekRegions: Record<string, string> = {
 export const plateRegex = /^([a-z]|[αβεζηικμνορτυχ]|[A-Z]|[ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ]){3}([-\s]?\d{4})?$/i;
 
 export const lookupPlateRegion = (plate: string): string | null => {
-  // Remove special characters
-  const cleanPlate = plate.replace(/[-\s]/g, '');
+  const trimmedPlate = plate.trim();
 
-  // Convert Latin characters to Greek if needed
+  if (!trimmedPlate || !plateRegex.test(trimmedPlate)) {
+    return null;
+  }
+
+  // Remove separators before extracting the two-letter region prefix.
+  const cleanPlate = trimmedPlate.replace(/[-\s]/g, '');
+
+  // Convert Latin characters to Greek if needed.
   const greekPlate = convertLatinToGreek(cleanPlate);
 
-  // Extract first 2 letters (the region code)
-  const regionCode = greekPlate.substring(0, 2);
+  // Extract the first two letters of the plate, which encode the region.
+  const regionCode = greekPlate.substring(0, 2).toUpperCase();
 
   return greekRegions[regionCode] || null;
 };
