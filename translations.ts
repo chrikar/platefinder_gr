@@ -7,6 +7,9 @@ export const translations = {
     inputLabel: 'Enter License Plate:',
     placeholder: 'e.g., ABE or ABE-1234',
     regionLabel: 'Region:',
+    mapCaption:
+      'Historical boundaries (Eurostat/GISCO, 2010). Marker-only locations are approximate.',
+    mapDescription: 'Map of Greece showing historical prefecture boundaries.',
     invalidFormat: 'Use 3 letters, optionally followed by 4 digits: ABE or ABE-1234',
     notFound: 'Region not found. Please check the plate number.',
     a11yLanguageToggle: 'Switch to Greek',
@@ -19,6 +22,9 @@ export const translations = {
     inputLabel: 'Εισαγάγετε Πινακίδα:',
     placeholder: 'π.χ., ABE ή ABE-1234',
     regionLabel: 'Περιοχή:',
+    mapCaption:
+      'Ιστορικά όρια (Eurostat/GISCO, 2010). Οι περιοχές με δείκτη είναι κατά προσέγγιση.',
+    mapDescription: 'Χάρτης της Ελλάδας με ιστορικά όρια νομών.',
     invalidFormat: 'Χρησιμοποιήστε 3 γράμματα, προαιρετικά με 4 ψηφία: ABE ή ABE-1234',
     notFound: 'Η περιοχή δεν βρέθηκε. Ελέγξτε τον αριθμό πινακίδας.',
     a11yLanguageToggle: 'Εναλλαγή στα Αγγλικά',

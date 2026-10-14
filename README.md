@@ -8,7 +8,7 @@ It's also mobile-friendly.
 ## Features
 
 - Lookup any Greek license plate prefix and get the corresponding prefecture
-- Interactive SVG map of Greece that highlights the matched region
+- SVG map of Greece with historical prefecture boundaries and a highlighted lookup result
 - UI available in English and Greek
 - Real-time inline format validation as you type
 - Vercel Web Analytics on the web build (no-op shim on native)
@@ -18,6 +18,15 @@ It's also mobile-friendly.
 Format: `YAB-1234` — three letters followed by four digits.
 
 The letter prefix identifies the prefecture (e.g. `YAB` → Athens, `NAB` → Thessaloniki, `YIB` → Piraeus).
+
+## Map data
+
+The map uses simplified 2010 NUTS level 3 boundaries from
+[Eurostat/GISCO](https://gisco-services.ec.europa.eu/distribution/v2/nuts/geojson/NUTS_RG_03M_2010_4326_LEVL_3.geojson)
+as a historical prefecture reference. These are not official plate-issuing boundaries. The dataset does not
+separate the Attica plate areas or Lesbos from Limnos, so those results use approximate location markers
+instead of highlighting a full boundary. Regenerate the compact SVG paths with
+`python3 scripts/generate-region-boundaries.py`.
 
 ## Getting Started
 
