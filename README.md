@@ -23,7 +23,7 @@ The letter prefix identifies the prefecture (e.g. `YAB` → Athens, `NAB` → Th
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20.19.4+ (or 22.13.0+)
 - npm
 
 ### Installation
