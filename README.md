@@ -32,7 +32,7 @@ instead of highlighting a full boundary. Regenerate the compact SVG paths with
 
 ### Prerequisites
 
-- Node.js 20.19.4+ (or 22.13.0+)
+- Node.js 24.22.0+
 - npm
 
 ### Installation
